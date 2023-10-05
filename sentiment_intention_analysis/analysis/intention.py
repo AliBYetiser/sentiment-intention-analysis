@@ -1,7 +1,7 @@
 import sys
 
 sys.path.append("../")
-from utils.utils import create_data_frame
+from sentiment_intention_analysis.utils.utils import create_dict
 
 
 def intention_bart(classifier, transcript, candidate_labels_with_descriptions):
@@ -14,7 +14,8 @@ def intention_bart(classifier, transcript, candidate_labels_with_descriptions):
         candidate_labels_with_descriptions (list): List of candidate intention labels and their descriptions.
 
     Returns:
-        None: The function does not return a value directly but may store the results in a DataFrame.
+        dict: A dictionary containing the transcript and intention classification results.
+
     """
     labels = []
     confidence = []
@@ -37,4 +38,4 @@ def intention_bart(classifier, transcript, candidate_labels_with_descriptions):
     ]  # Flatten the list of lists into list
 
     # Create a DataFrame with the labels, confidence scores, and transcript
-    create_data_frame(labels, confidence, transcript)
+    return create_dict(labels, confidence, transcript)

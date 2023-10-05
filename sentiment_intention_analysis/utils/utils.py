@@ -44,7 +44,7 @@ def load_transcript_data(transcript_path):
     return data
 
 
-def create_data_frame(labels, confidence, transcript):
+def create_dict(labels, confidence, transcript):
     """
     Create a DataFrame to display sentiment/intention classification results.
 
@@ -54,7 +54,8 @@ def create_data_frame(labels, confidence, transcript):
         transcript (str): The text transcript being analyzed.
 
     Returns:
-        None: The function prints the DataFrame to the console.
+            dict: A dictionary containing the transcript and probability distribution results.
+
     """
     # Create DataFrames for labels and confidence scores
     labels_df = pd.DataFrame({"Labels": labels})
@@ -62,14 +63,10 @@ def create_data_frame(labels, confidence, transcript):
 
     # Concatenate the DataFrames horizontally without resetting the index
     scores = pd.concat([labels_df, confidence_df], ignore_index=False, axis=1)
-
-    # Print the results
-    print(
-        "\n--------------------------------------------------------------------------------------"
-    )
-    print(f"\n Entered input sentence: {transcript}")
-    print("\n Sentiment of the transcript (Probability Distribution): ")
-    print(scores.to_string(index=False))
-    print(
-        "\n--------------------------------------------------------------------------------------"
-    )
+    result = {
+        "Transcript": transcript,
+        "Probability Distribution": scores.to_string(
+            index=False
+        ),
+    }
+    return result

@@ -1,0 +1,12 @@
+Metadata-Version: 2.1
+Name: sentiment-intention-analysis
+Version: 0.1.0
+Summary: Toolkit for sentiment analysis and intention identification in text conversations between agents and customers using zero-shot techniques.
+Author: AliBYetiser
+Author-email: abyetiser@gmail.com
+License: MIT
+Requires: transformers
+Requires: pandas
+Requires: torch
+Requires: Flask
+License-File: LICENSE

@@ -1,0 +1,14 @@
+LICENSE
+README.md
+setup.py
+sentiment_intention_analysis/__init__.py
+sentiment_intention_analysis/app.py
+sentiment_intention_analysis.egg-info/PKG-INFO
+sentiment_intention_analysis.egg-info/SOURCES.txt
+sentiment_intention_analysis.egg-info/dependency_links.txt
+sentiment_intention_analysis.egg-info/top_level.txt
+sentiment_intention_analysis/analysis/__init__.py
+sentiment_intention_analysis/analysis/intention.py
+sentiment_intention_analysis/analysis/sentiment.py
+sentiment_intention_analysis/utils/__init__.py
+sentiment_intention_analysis/utils/utils.py
