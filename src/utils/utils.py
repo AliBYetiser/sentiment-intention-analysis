@@ -1,30 +1,34 @@
-import os
 import json
 import pandas as pd
 from transformers import pipeline, AutoModelForSequenceClassification, AutoTokenizer
 
-# Get the current, parent, and data directories
-current_dir = os.getcwd()
-parent_dir = os.path.dirname(current_dir)
-transcript_file = "transcript.json"  # Name of the JSON file
-transcript_path = os.path.join(parent_dir, "data/transcript.json")
-model_path = os.path.join(parent_dir, "resources/bart-large-mnli")
 
+def initialize_classifier(model_path):
+    """
+    Initialize a zero-shot classification pipeline with a pre-trained model and tokenizer.
 
-# Initialize the analysis model and tokenizer
-def initialize_classifier():
+    Args:
+        model_path (str): The directory path or model identifier specifying the pre-trained model to use.
+
+    Returns:
+        pipeline: A zero-shot classification pipeline configured with the specified model and tokenizer.
+
+    Example:
+        classifier = initialize_classifier("facebook/bart-large-mnli")
+        result = classifier("Text to classify", candidate_labels=["label_1", "label_2"])
+    """
     model = AutoModelForSequenceClassification.from_pretrained(model_path)
     tokenizer = AutoTokenizer.from_pretrained(model_path)
     classifier = pipeline("zero-shot-classification", model=model, tokenizer=tokenizer)
     return classifier
 
 
-def load_transcript_data():
+def load_transcript_data(transcript_path):
     """
     Load transcript data from a JSON file located in the specified directory.
 
     Args:
-        None: The function loads the transcript.json in data folder.
+        transcript_path (str): The directory path specifying the location of transcript.json.
 
     Returns:
         list: A list of transcript entries, each entry represented as a dictionary.

@@ -1,35 +1,33 @@
 import sys
+
 sys.path.append("../")
 from utils.utils import create_data_frame
 
 
-def sentiment_bart(classifier, transcript):
+def sentiment_bart(classifier, transcript, candidate_labels, hypothesis_template=None):
     """
     Analyzes the sentiment in a transcript using a BART-based classifier.
 
     Args:
-        classifier: The zero-shot classifier model.
+        classifier (pipeline): The zero-shot classifier model.
         transcript (str): The text transcript of the conversation between agent and customer.
+        candidate_labels (list): List of candidate sentiment labels to predict.
+        hypothesis_template (str, optional): A template for hypothesis generation. Default is None.
 
     Returns:
         None: The function does not return a value directly but may store the results in a DataFrame.
+
+    Example:
+        sentiment_bart(classifier, "Hello! How can I assist you today?", ["positive", "negative", "neutral"])
     """
     labels = []
     confidence = []
-    # Possible Sentiment Categories
-    # Define the candidate sentiment labels that can be predicted
-    candidate_labels = [
-        "positive",  # Indicates a positive sentiment in the transcript.
-        "negative",  # Indicates a negative sentiment in the transcript.
-        "neutral",
-    ]  # Indicates a neutral sentiment in the transcript.
-
-    # Set the hypothesis template
-    hypothesis_template = "The sentiment of this text is {}."
 
     # Send the labels and transcripts to the classifier pipeline
     result = classifier(
-        transcript, candidate_labels, hypothesis_template=hypothesis_template
+        transcript,
+        candidate_labels=candidate_labels,
+        hypothesis_template=hypothesis_template,
     )
 
     # Extract the labels from results dictionary
