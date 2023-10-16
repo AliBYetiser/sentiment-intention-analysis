@@ -1,8 +1,10 @@
 # Neural Sentiment and Intention Analysis of Agent-Customer Interaction Transcripts with BART
 import os
-from sentiment_intention_analysis.analysis.sentiment import sentiment_bart
-from sentiment_intention_analysis.analysis.intention import intention_bart
-from sentiment_intention_analysis.utils.utils import initialize_classifier, load_transcript_data
+import sys
+sys.path.append(os.getcwd())
+from analysis.sentiment import sentiment_bart
+from analysis.intention import intention_bart
+from utils.utils import initialize_classifier, load_transcript_data
 import configparser
 import ast
 import flask
@@ -80,4 +82,4 @@ if __name__ == "__main__":
     # Load transcript data from path
     transcript_data = load_transcript_data(transcript_path)
     classifier = initialize_classifier(model_path)
-    app.run(host="0.0.0.0", port="8080")
+    app.run()

@@ -1,7 +1,7 @@
 import sys
 
 sys.path.append("../")
-from sentiment_intention_analysis.utils.utils import create_dict
+from utils.utils import create_dict
 
 
 def sentiment_bart(classifier, transcript, candidate_labels, hypothesis_template=None):
