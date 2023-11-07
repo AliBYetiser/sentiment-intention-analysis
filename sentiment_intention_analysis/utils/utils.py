@@ -17,7 +17,7 @@ def initialize_classifier(model_path):
         classifier = initialize_classifier("facebook/bart-large-mnli")
         result = classifier("Text to classify", candidate_labels=["label_1", "label_2"])
     """
-    model = AutoModelForSequenceClassification.from_pretrained(model_path)
+    model = AutoModelForSequenceClassification.from_pretrained(model_path) # add try catch
     tokenizer = AutoTokenizer.from_pretrained(model_path)
     classifier = pipeline("zero-shot-classification", model=model, tokenizer=tokenizer)
     return classifier
@@ -44,9 +44,9 @@ def load_transcript_data(transcript_path):
     return data
 
 
-def create_dict(labels, confidence, transcript):
+def create_result(labels, confidence, transcript):
     """
-    Create a DataFrame to display sentiment/intention classification results.
+    Create a string to print DataFrame in order to display sentiment/intention classification results.
 
     Args:
         labels (list): List of sentiment labels (e.g., 'positive', 'negative', 'neutral').
@@ -54,7 +54,7 @@ def create_dict(labels, confidence, transcript):
         transcript (str): The text transcript being analyzed.
 
     Returns:
-            dict: A dictionary containing the transcript and probability distribution results.
+        result: A string containing the transcript and probability distribution results.
 
     """
     # Create DataFrames for labels and confidence scores
@@ -63,10 +63,5 @@ def create_dict(labels, confidence, transcript):
 
     # Concatenate the DataFrames horizontally without resetting the index
     scores = pd.concat([labels_df, confidence_df], ignore_index=False, axis=1)
-    result = {
-        "Transcript": transcript,
-        "Probability Distribution": scores.to_string(
-            index=False
-        ),
-    }
+    result = "Input: \n" + transcript + "\n" + "Probability Distribution: \n" + scores.to_string(index=False) + "\n"
     return result

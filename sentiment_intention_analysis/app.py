@@ -8,49 +8,61 @@ from utils.utils import initialize_classifier, load_transcript_data
 import configparser
 import ast
 import flask
-from flask import Flask
-from flask import request
+from flask import Flask, request, render_template
 
 app = Flask(__name__)
 
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    user_input = None
+    sample_transcript = None
+    _, customer_responses = sample()
+    sample_prediction = None
 
-@app.route("/sample_transcript")
-def sample_transcript():
+    if request.method == 'POST':
+        user_input = predict(request.form['user_input'])
+
+    if request.method == 'GET':
+        if 'sample_button' in request.args:
+            sample_transcript,_ = sample()
+    
+    if request.method == 'GET':
+        if 'predict_sample_button' in request.args:
+            sample_prediction = predict(customer_responses)
+
+    return render_template('index.html', user_input=user_input, sample=sample_transcript, sample_prediction=sample_prediction)
+
+
+def sample():
+    transcript = ""
     # Initialize an empty string to store concatenated customer responses
-    concatenated_responses = ""
+    customer_responses = ""
     # Iterate through the transcript data and concatenate customer responses
     for entry in transcript_data:
+        transcript += entry["message"] + " \n"
+
         if "role" in entry and "customer" == entry["role"]:
-            concatenated_responses += (
+            customer_responses += (
                 entry["message"] + " "
             )  # Concatenate with a space between responses
+    
+    transcript = transcript.split('\n')
+    return transcript, customer_responses
 
+
+def predict(input="!"):
     sentiment = sentiment_bart(
         classifier,
-        concatenated_responses,
+        input,
         sentiment_candidate_labels,
         sentiment_hypothesis_template,
     )
     intention = intention_bart(
-        classifier, concatenated_responses, intention_labels_with_descriptions
+        classifier, input, intention_labels_with_descriptions
     )
-    response = {"sentiment": sentiment, "intention": intention}
-    return flask.jsonify(response)
 
-@app.route("/predict")
-def predict():
-    user_input = request.args.get("input")
-    sentiment = sentiment_bart(
-        classifier,
-        user_input,
-        sentiment_candidate_labels,
-        sentiment_hypothesis_template,
-    )
-    intention = intention_bart(
-        classifier, user_input, intention_labels_with_descriptions
-    ),
-    response = {"sentiment": sentiment, "intention": intention}
-    return flask.jsonify(response)
+    response = "--------------------- Sentiment ---------------------\n" + sentiment +"\n" + "--------------------- Intention ---------------------\n" + intention + "\n"
+    return response.split('\n')
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 import sys
 
 sys.path.append("../")
-from utils.utils import create_dict
+from utils.utils import create_result
 
 
 def intention_bart(classifier, transcript, candidate_labels_with_descriptions):
@@ -14,7 +14,7 @@ def intention_bart(classifier, transcript, candidate_labels_with_descriptions):
         candidate_labels_with_descriptions (list): List of candidate intention labels and their descriptions.
 
     Returns:
-        dict: A dictionary containing the transcript and intention classification results.
+        string: A string containing the transcript and intention classification results.
 
     """
     labels = []
@@ -38,4 +38,4 @@ def intention_bart(classifier, transcript, candidate_labels_with_descriptions):
     ]  # Flatten the list of lists into list
 
     # Create a DataFrame with the labels, confidence scores, and transcript
-    return create_dict(labels, confidence, transcript)
+    return create_result(labels, confidence, transcript)

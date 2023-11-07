@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sentiment-Intention Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #222;
+            color: #fff;
+            margin: 0;
+            min-height: 100vh; /* Use min-height to ensure the page can be taller than the viewport */
+        }
+        .title-container {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 40px;
+            position: relative; /* Add this property */
+            z-index: 2; /* Add this property */
+        }
+        h1 {
+            font-size: 24px;
+        }
+        .container {
+            max-width: 600px;
+            min-width: 300px;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative; /* Add this property */
+            z-index: 2; /* Add this property */
+        }
+        input[type="text"] {
+            width: 90%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #444;
+            border-radius: 3px;
+            background-color: #444;
+            color: #fff;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            box-sizing: content-box; /* Include padding in the element's width */
+
+        }
+        .output-container {
+            max-width: 600px;
+            min-width: 300px;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            margin-top: 20px;
+            position: relative; /* Add this property */
+            z-index: 2; /* Add this property */
+
+        }
+        .outer-container {
+            max-width: 600px;
+            min-width: 600px;
+            min-height :900px;
+            padding: 20px;
+            background-color: transparent; /* Transparent background for the outer container */
+            border-radius: 5px;
+            text-align: center;
+            height: 300px; /* Set a fixed height for the outer container */
+            overflow-y: scroll;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* Internet Explorer 10+ */
+        }
+        .outer-container::-webkit-scrollbar {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="outer-container">
+        <div class="title-container">
+            <h1>Sentiment-Intention Analysis</h1>
+        </div>
+        <div class="container">
+            <form method="post">
+                <input type="text" name="user_input" id="user_input" placeholder="Enter transcript">
+                <div class="button-container">
+                    <input type="submit" value="Predict">
+                </div>
+            </form>
+            {% if user_input %}
+                {% for paragraph in user_input %}
+                    <p>{{ paragraph }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="output-container">
+            <form method="get">
+                <input type="submit" name="sample_button" value="Show sample transcript">
+            </form>
+            {% if sample %}
+                {% for paragraph in sample %}
+                    <p>{{ paragraph }}</p>
+                {% endfor %}
+            {% endif %}
+            <form mehod="get">
+                <input type="submit" name="predict_sample_button" value="Predict sample transcript">
+            </form>
+            {% if sample_prediction %}
+                {% for paragraph in sample_prediction %}
+                    <p>{{ paragraph }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

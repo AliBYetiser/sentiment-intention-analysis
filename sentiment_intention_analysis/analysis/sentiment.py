@@ -1,7 +1,7 @@
 import sys
 
 sys.path.append("../")
-from utils.utils import create_dict
+from utils.utils import create_result
 
 
 def sentiment_bart(classifier, transcript, candidate_labels, hypothesis_template=None):
@@ -15,7 +15,7 @@ def sentiment_bart(classifier, transcript, candidate_labels, hypothesis_template
         hypothesis_template (str, optional): A template for hypothesis generation. Default is None.
 
     Returns:
-        dict: A dictionary containing the transcript and sentiment classification results.
+        string: A string containing the transcript and sentiment classification results.
 
 
     Example:
@@ -46,4 +46,4 @@ def sentiment_bart(classifier, transcript, candidate_labels, hypothesis_template
     ]  # Flatten the list of lists into list
 
     # Create a DataFrame with the labels, confidence scores, and transcript
-    return create_dict(labels, confidence, transcript)
+    return create_result(labels, confidence, transcript)
